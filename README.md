@@ -1,0 +1,1 @@
+# homebridge-bravia-picture-mode
