@@ -7,7 +7,7 @@ class BraviaPictureModePlugin {
     this.api = api;
 
     // Configuration
-    this.name = config.name || 'TV Picture Mode';
+    this.name = config.name || 'Game Mode';
     this.ip = config.ip;
     this.psk = config.psk;
 
@@ -25,23 +25,15 @@ class BraviaPictureModePlugin {
     const uuid = this.api.hap.uuid.generate('homebridge-bravia-picture-mode' + this.name);
     this.accessory = new this.api.platformAccessory(this.name, uuid);
 
-    // Create services
-    this.gameModeService = this.accessory.getService('Game Mode') ||
-      this.accessory.addService(this.Service.Switch, 'Game Mode', 'game_mode');
+    // Create single switch service for Game Mode
+    this.gameModeService = this.accessory.getService(this.Service.Switch) ||
+      this.accessory.addService(this.Service.Switch, this.name, 'game_mode');
 
-    this.standardModeService = this.accessory.getService('Standard Mode') ||
-      this.accessory.addService(this.Service.Switch, 'Standard Mode', 'standard_mode');
-
-    // Set up handlers for the switches
+    // Set up handlers for the switch
     this.gameModeService
       .getCharacteristic(this.Characteristic.On)
       .onGet(this.getGameMode.bind(this))
       .onSet(this.setGameMode.bind(this));
-
-    this.standardModeService
-      .getCharacteristic(this.Characteristic.On)
-      .onGet(this.getStandardMode.bind(this))
-      .onSet(this.setStandardMode.bind(this));
 
     this.api.publishExternalAccessories('homebridge-bravia-picture-mode', [this.accessory]);
   }
@@ -97,24 +89,11 @@ class BraviaPictureModePlugin {
     return currentMode === 'game';
   }
 
-  async getStandardMode() {
-    const currentMode = await this.getPictureMode();
-    return currentMode === 'standard';
-  }
-
   async setGameMode(on) {
     if (on) {
       await this.setPictureMode('game');
-      // Turn off standard mode switch
-      this.standardModeService.updateCharacteristic(this.Characteristic.On, false);
-    }
-  }
-
-  async setStandardMode(on) {
-    if (on) {
+    } else {
       await this.setPictureMode('standard');
-      // Turn off game mode switch
-      this.gameModeService.updateCharacteristic(this.Characteristic.On, false);
     }
   }
 }
