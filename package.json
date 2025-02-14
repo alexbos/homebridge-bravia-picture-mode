@@ -1,7 +1,11 @@
 {
   "name": "homebridge-bravia-picture-mode",
-  "version": "0.1.0",
-  "description": "Homebridge plugin for Sony Bravia TV picture mode control",
+  "version": "0.1.1",
+  "description": "Homebridge plugin to provide a game mode switch for Sony Bravia TVs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexbos/homebridge-bravia-picture-mode.git"
+  },
   "author": "alexbos",
   "main": "index.js",
   "keywords": [
