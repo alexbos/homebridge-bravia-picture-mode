@@ -9,7 +9,7 @@
           "title": "Name",
           "type": "string",
           "required": false,
-          "default": "Game Mode",
+          "default": "Picture Mode Toggle",
           "description": "The name that will appear in the Home app"
         },
         "ip": {
@@ -24,6 +24,46 @@
           "type": "string",
           "required": true,
           "description": "PSK configured in your TV's network settings"
+        },
+        "onMode": {
+          "title": "Picture Mode when ON",
+          "type": "string",
+          "required": true,
+          "default": "game",
+          "oneOf": [
+            { "title": "Vivid", "enum": ["vivid"] },
+            { "title": "Standard", "enum": ["standard"] },
+            { "title": "Custom", "enum": ["custom"] },
+            { "title": "Cinema Pro", "enum": ["cinemaPro"] },
+            { "title": "Cinema Home", "enum": ["cinemaHome"] },
+            { "title": "Sports", "enum": ["sports"] },
+            { "title": "Animation", "enum": ["animation"] },
+            { "title": "Photo Vivid", "enum": ["photoVivid"] },
+            { "title": "Photo Standard", "enum": ["photoStandard"] },
+            { "title": "Photo Custom", "enum": ["photoCustom"] },
+            { "title": "Game", "enum": ["game"] },
+            { "title": "Graphics", "enum": ["graphics"] }
+          ]
+        },
+        "offMode": {
+          "title": "Picture Mode when OFF",
+          "type": "string",
+          "required": true,
+          "default": "standard",
+          "oneOf": [
+            { "title": "Vivid", "enum": ["vivid"] },
+            { "title": "Standard", "enum": ["standard"] },
+            { "title": "Custom", "enum": ["custom"] },
+            { "title": "Cinema Pro", "enum": ["cinemaPro"] },
+            { "title": "Cinema Home", "enum": ["cinemaHome"] },
+            { "title": "Sports", "enum": ["sports"] },
+            { "title": "Animation", "enum": ["animation"] },
+            { "title": "Photo Vivid", "enum": ["photoVivid"] },
+            { "title": "Photo Standard", "enum": ["photoStandard"] },
+            { "title": "Photo Custom", "enum": ["photoCustom"] },
+            { "title": "Game", "enum": ["game"] },
+            { "title": "Graphics", "enum": ["graphics"] }
+          ]
         }
       }
     },
@@ -37,7 +77,9 @@
           {
             "key": "psk",
             "type": "password"
-          }
+          },
+          "onMode",
+          "offMode"
         ]
       }
     ]

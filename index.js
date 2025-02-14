@@ -7,9 +7,11 @@ class BraviaPictureModePlugin {
     this.api = api;
 
     // Configuration
-    this.name = config.name || 'Game Mode';
+    this.name = config.name || 'Picture Mode Toggle';
     this.ip = config.ip;
     this.psk = config.psk;
+    this.onMode = config.onMode || 'game';    // Default to game mode if not specified
+    this.offMode = config.offMode || 'standard';  // Default to standard if not specified
 
     // Required for the plugin to work
     this.Service = this.api.hap.Service;
@@ -25,15 +27,15 @@ class BraviaPictureModePlugin {
     const uuid = this.api.hap.uuid.generate('homebridge-bravia-picture-mode' + this.name);
     this.accessory = new this.api.platformAccessory(this.name, uuid);
 
-    // Create single switch service for Game Mode
-    this.gameModeService = this.accessory.getService(this.Service.Switch) ||
-      this.accessory.addService(this.Service.Switch, this.name, 'game_mode');
+    // Create switch service for Picture Mode Toggle
+    this.switchService = this.accessory.getService(this.Service.Switch) ||
+      this.accessory.addService(this.Service.Switch, this.name, 'picture_mode');
 
     // Set up handlers for the switch
-    this.gameModeService
+    this.switchService
       .getCharacteristic(this.Characteristic.On)
-      .onGet(this.getGameMode.bind(this))
-      .onSet(this.setGameMode.bind(this));
+      .onGet(this.getPictureState.bind(this))
+      .onSet(this.setPictureState.bind(this));
 
     this.api.publishExternalAccessories('homebridge-bravia-picture-mode', [this.accessory]);
   }
@@ -84,16 +86,16 @@ class BraviaPictureModePlugin {
     }
   }
 
-  async getGameMode() {
+  async getPictureState() {
     const currentMode = await this.getPictureMode();
-    return currentMode === 'game';
+    return currentMode === this.onMode;
   }
 
-  async setGameMode(on) {
+  async setPictureState(on) {
     if (on) {
-      await this.setPictureMode('game');
+      await this.setPictureMode(this.onMode);
     } else {
-      await this.setPictureMode('standard');
+      await this.setPictureMode(this.offMode);
     }
   }
 }
