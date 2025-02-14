@@ -1,0 +1,44 @@
+{
+    "pluginAlias": "BraviaPictureMode",
+    "pluginType": "platform",
+    "singular": true,
+    "schema": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "required": false,
+          "default": "Game Mode",
+          "description": "The name that will appear in the Home app"
+        },
+        "ip": {
+          "title": "IP Address",
+          "type": "string",
+          "required": true,
+          "format": "ipv4",
+          "description": "IP address of your Sony Bravia TV"
+        },
+        "psk": {
+          "title": "Pre-Shared Key",
+          "type": "string",
+          "required": true,
+          "description": "PSK configured in your TV's network settings"
+        }
+      }
+    },
+    "layout": [
+      {
+        "type": "flex",
+        "flex-flow": "column",
+        "items": [
+          "name",
+          "ip",
+          {
+            "key": "psk",
+            "type": "password"
+          }
+        ]
+      }
+    ]
+  }
