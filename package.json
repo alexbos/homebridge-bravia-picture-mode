@@ -6,7 +6,10 @@
     "type": "git",
     "url": "git+https://github.com/alexbos/homebridge-bravia-picture-mode.git"
   },
-  "author": "alexbos",
+  "author": {
+    "name": "alexbos",
+    "url": "https://github.com/alexbos"
+  },
   "main": "index.js",
   "keywords": [
     "homebridge-plugin",
